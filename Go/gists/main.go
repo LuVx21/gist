@@ -2,19 +2,13 @@ package main
 
 import (
     "fmt"
+    _ "luvx/api/log"
+    "path"
 )
 
 func main() {
-    fmt.Println("hello")
+    logfile := path.Join("logDir", "app")
+    fmt.Println(logfile)
+
     panic("hello")
 }
-
-//func main() {
-//	r := gin.Default()
-//	r.GET("/ping", func(c *gin.Context) {
-//		c.JSON(200, gin.H{
-//			"message": "pong1",
-//		})
-//	})
-//	r.Run(":8090")
-//}
