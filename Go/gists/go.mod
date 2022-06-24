@@ -1,6 +1,6 @@
 module luvx
 
-go 1.16
+go 1.18
 
 require (
 	github.com/deckarep/golang-set v1.7.1
@@ -20,4 +20,5 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/thedevsaddam/gojsonq/v2 v2.5.2
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
+	golang.org/x/time v0.0.0-20190308202827-9d24e82272b4
 )

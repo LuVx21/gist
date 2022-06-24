@@ -51,6 +51,7 @@ func c() {
     jsonBlob := a()
     // 不反序列化为对象, 直接操作
     var f []interface{}
+    //ff := make(map[string]interface{})
     json.Unmarshal(jsonBlob, &f)
 
     for k, v := range f {
