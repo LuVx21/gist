@@ -3,6 +3,9 @@ package main
 import (
     "fmt"
     "github.com/gocolly/colly"
+    "io"
+    "net/http"
+    "os"
     "strconv"
     "testing"
     "time"
@@ -27,12 +30,19 @@ func Test01(t *testing.T) {
         url := e.Attr("src")
         if url != "" {
             fmt.Println("Found image:", url)
+            resp, _ := http.Get(url)
+            defer resp.Body.Close()
+
+            file, _ := os.Create(strconv.FormatInt(time.Now().UnixNano(), 10) + ".jpg")
+            defer file.Close()
+
+            io.Copy(file, resp.Body)
+            fmt.Println("Image saved to", file.Name())
         }
     })
 
     c.Visit("")
 }
-
 
 func Test02(t *testing.T) {
     start := time.Now()

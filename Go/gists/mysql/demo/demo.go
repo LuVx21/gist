@@ -4,7 +4,6 @@ import (
     "database/sql"
     "fmt"
     _ "github.com/go-sql-driver/mysql"
-    "log"
     "luvx/api/common"
     "luvx/mysql/dbconfig"
     "net/http"
@@ -14,8 +13,8 @@ var db *sql.DB
 
 func init() {
     db, _ = sql.Open("mysql", dbconfig.Url)
-    db.SetMaxOpenConns(2000)
-    db.SetMaxIdleConns(1000)
+    db.SetMaxOpenConns(2_000)
+    db.SetMaxIdleConns(1_000)
     db.Ping()
 }
 
@@ -77,14 +76,3 @@ func _select() {
     }
 }
 
-func startHttpServer() {
-    http.HandleFunc("/pool", pool)
-    err := http.ListenAndServe(":8090", nil)
-    if err != nil {
-        log.Fatal("ListenAndServe: ", err)
-    }
-}
-
-func main() {
-    startHttpServer()
-}

@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "fmt"
     goJson "github.com/json-iterator/go"
+    "github.com/pkg/errors"
     "luvx/api/common"
 )
 
@@ -15,6 +16,7 @@ func a() []byte {
     // 序列化
     jsonBlob, err := json.MarshalIndent(users, "", "    ")
     if err != nil {
+        err = errors.Wrap(err, "序列化失败")
         fmt.Println("error: ", err)
     }
     fmt.Println(string(jsonBlob))
