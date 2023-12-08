@@ -1,4 +1,4 @@
 log:
-  logDir: ./logs/
+  logDir: ./.logs/
   mainLog: main-%Y-%m-%d.log
   errorLog: error-%Y-%m-%d.log

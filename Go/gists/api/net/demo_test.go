@@ -1,9 +1,9 @@
 package net
 
 import (
-	"testing"
+    "testing"
 )
 
 func Test_a(t *testing.T) {
-	main()
+    main()
 }
