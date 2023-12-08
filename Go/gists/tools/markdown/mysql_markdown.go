@@ -48,9 +48,9 @@ IS_NULLABLE,
 EXTRA,
 COLUMN_COMMENT,
 COLUMN_DEFAULT
-FROM information_schema.columns 
-WHERE table_schema=? 
-AND table_name=? 
+FROM information_schema.columns
+WHERE table_schema=?
+AND table_name=?
 ORDER BY ORDINAL_POSITION ASC
 `
 )
@@ -222,8 +222,8 @@ func init() {
         fmt.Println(
             "mysql_markdown version: 1.0.5\n" +
                 "build by golang 2020.07.04\n" +
-                "author		AlicFeng\n" +
-                "tutorial	https://github.com/alicfeng/mysql_markdown\n" +
+                "author        AlicFeng\n" +
+                "tutorial    https://github.com/alicfeng/mysql_markdown\n" +
                 "价值源于技术,技术源于分享" +
                 "")
         os.Exit(0)

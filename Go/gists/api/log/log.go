@@ -71,11 +71,3 @@ func init() {
     log.SetOutput(os.Stdout)
     log.SetLevel(log.DebugLevel)
 }
-
-func a() {
-    log.WithFields(log.Fields{
-        "json": "json1",
-    }).Info("foo bar")
-
-    log.WithField("json", "json1").Infoln("foo bar")
-}
