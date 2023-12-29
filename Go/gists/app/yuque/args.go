@@ -10,7 +10,7 @@ import (
 var b = flag.Bool("b", false, "bool类型参数")
 var s = flag.String("s", "", "string类型参数")
 
-func main() {
+func main1() {
     fmt.Println("yuque")
 
     flag.Parse()

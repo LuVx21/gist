@@ -10,7 +10,7 @@ import (
 )
 
 func fetch(url string) *goquery.Document {
-    log.Print("Fetch Url", url)
+    log.Print("发起请求:", url)
     client := &http.Client{}
     req, _ := http.NewRequest("GET", url, nil)
     req.Header.Set("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)")

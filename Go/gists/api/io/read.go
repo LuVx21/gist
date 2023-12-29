@@ -5,7 +5,7 @@ import (
     "fmt"
     "io"
     "io/ioutil"
-    _ "luvx/api/log"
+    _ "luvx/api/logs"
     "os"
     "strings"
 )

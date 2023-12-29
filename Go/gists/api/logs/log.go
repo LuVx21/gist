@@ -1,9 +1,9 @@
-package log
+package logs
 
 import (
     rotatelogs "github.com/lestrrat-go/file-rotatelogs"
     "github.com/rifflock/lfshook"
-    log "github.com/sirupsen/logrus"
+    "github.com/sirupsen/logrus"
     prefixed "github.com/x-cray/logrus-prefixed-formatter"
     "luvx/config"
     "os"
@@ -11,13 +11,15 @@ import (
     "time"
 )
 
+var Log = logrus.New()
+
 var stdFormatter *prefixed.TextFormatter  // 命令行输出格式
 var fileFormatter *prefixed.TextFormatter // 文件输出格式
 
 func init() {
     stdFormatter = &prefixed.TextFormatter{
         FullTimestamp:   true,
-        TimestampFormat: "2006-01-02.15:04:05.000000",
+        TimestampFormat: "2006-01-02 15:04:05.000000",
         ForceFormatting: true,
         ForceColors:     true,
         DisableColors:   false,
@@ -35,16 +37,15 @@ func init() {
 
     fileFormatter = &prefixed.TextFormatter{
         FullTimestamp:   true,
-        TimestampFormat: "2006-01-02.15:04:05.000000",
+        TimestampFormat: "2006-01-02 15:04:05.000000",
         ForceFormatting: true,
         ForceColors:     false,
         DisableColors:   true,
     }
 
     logPath := config.Config.GetString("log.logDir")
-    logFile := config.Config.GetString("log.mainLog")
     writer, _ := rotatelogs.New(
-        path.Join(logPath, logFile),
+        path.Join(logPath, config.Config.GetString("log.mainLog")),
         rotatelogs.WithLinkName(path.Join(logPath, "main.log")),
         rotatelogs.WithMaxAge(time.Duration(168)*time.Second),
         rotatelogs.WithRotationTime(time.Duration(24)*time.Second),
@@ -57,17 +58,17 @@ func init() {
     )
 
     lfHook := lfshook.NewHook(lfshook.WriterMap{
-        log.DebugLevel: writer,
-        log.InfoLevel:  writer,
-        log.WarnLevel:  writer,
-        log.ErrorLevel: writer1,
-        log.FatalLevel: writer1,
-        log.PanicLevel: writer1,
+        logrus.DebugLevel: writer,
+        logrus.InfoLevel:  writer,
+        logrus.WarnLevel:  writer,
+        logrus.ErrorLevel: writer1,
+        logrus.FatalLevel: writer1,
+        logrus.PanicLevel: writer1,
     }, fileFormatter)
 
-    log.AddHook(lfHook)
-    log.SetReportCaller(true)
-    log.SetFormatter(stdFormatter)
-    log.SetOutput(os.Stdout)
-    log.SetLevel(log.DebugLevel)
+    Log.AddHook(lfHook)
+    Log.SetReportCaller(true)
+    Log.SetFormatter(stdFormatter)
+    Log.SetOutput(os.Stdout)
+    Log.SetLevel(logrus.DebugLevel)
 }

@@ -5,7 +5,7 @@ import (
     "fmt"
     log "github.com/sirupsen/logrus"
     "io/ioutil"
-    _ "luvx/api/log"
+    _ "luvx/api/logs"
     "net/http"
     "time"
 )

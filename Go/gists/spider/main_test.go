@@ -4,9 +4,11 @@ import (
     "fmt"
     "github.com/gocolly/colly"
     "io"
+    "luvx/api/logs"
     "net/http"
     "os"
     "strconv"
+    "strings"
     "testing"
     "time"
 )
@@ -44,17 +46,29 @@ func Test01(t *testing.T) {
     c.Visit("")
 }
 
-func Test02(t *testing.T) {
-    start := time.Now()
-    ch := make(chan bool)
-    for i := 0; i < 10; i++ {
-        go parseUrls("https://movie.douban.com/top250?start="+strconv.Itoa(25*i), ch)
-    }
+/**
+m.lnsjkc.com
+*/
+func Test03(t *testing.T) {
+    c1 := colly.NewCollector()
+    c1.OnHTML("div#novelcontent p", func(e *colly.HTMLElement) {
+       logs.Log.Infoln(strings.ReplaceAll(e.Text,"。","。\n"))
+    })
+    c1.OnHTML("div#novelcontent ul.novelbutton a#pb_next", func(e *colly.HTMLElement) {
+        href := e.Attr("href")
+        if strings.HasSuffix(href,"_2.html") {
+            c1.Visit("https://m.lnsjkc.com" + href)
+        }
+    })
 
-    for i := 0; i < 10; i++ {
-        <-ch
-    }
+    c := colly.NewCollector()
+    c.OnHTML("ul.chapters li a", func(e *colly.HTMLElement) {
+       url := e.Attr("href")
+       fmt.Println(e.Text, url)
+        if url != "" {
+            c1.Visit(url)
+        }
+    })
 
-    elapsed := time.Since(start)
-    fmt.Printf("Took %s", elapsed)
+    c.Visit("https://m.lnsjkc.com/46/46869_7/")
 }

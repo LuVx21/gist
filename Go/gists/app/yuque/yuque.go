@@ -2,7 +2,6 @@ package main
 
 import (
     "fmt"
-    "luvx/app/yuque/yq"
 )
 
 const root = "/Users/renxie/OneDrive/Code/doc/"
@@ -17,6 +16,6 @@ func init() {
 
 func main() {
     fmt.Println("a")
-    fmt.Println(yq.NewCreateBody())
+    //fmt.Println(yq.NewCreateBody())
     //fmt.Println(yq.CreateBody{Body: "a"})
 }
