@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	DB_PATH = "/Users/renxie/data/RocksDB_2"
+	DB_PATH = "/Users/renxie/data/RocksDB"
 )
 const (
 	KB int = 1024
