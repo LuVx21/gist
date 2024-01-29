@@ -1,6 +1,8 @@
 module luvx
 
-go 1.20
+go 1.21
+
+toolchain go1.21.6
 
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
