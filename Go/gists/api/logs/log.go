@@ -43,15 +43,15 @@ func init() {
         DisableColors:   true,
     }
 
-    logPath := config.Config.GetString("log.logDir")
+    logPath := config.AppConfig.Log.LogDir
     writer, _ := rotatelogs.New(
-        path.Join(logPath, config.Config.GetString("log.mainLog")),
+        path.Join(logPath, config.AppConfig.Log.MainLog),
         rotatelogs.WithLinkName(path.Join(logPath, "main.log")),
         rotatelogs.WithMaxAge(time.Duration(168)*time.Second),
         rotatelogs.WithRotationTime(time.Duration(24)*time.Second),
     )
     writer1, _ := rotatelogs.New(
-        path.Join(logPath, config.Config.GetString("log.errorLog")),
+        path.Join(logPath, config.AppConfig.Log.ErrorLog),
         rotatelogs.WithLinkName(path.Join(logPath, "error.log")),
         rotatelogs.WithMaxAge(time.Duration(168)*time.Second),
         rotatelogs.WithRotationTime(time.Duration(24)*time.Second),

@@ -2,3 +2,20 @@ log:
   logDir: ./.logs/
   mainLog: main-%Y-%m-%d.log
   errorLog: error-%Y-%m-%d.log
+
+mysql:
+  host: luvx:53306
+  username: root
+  password: 1121
+  dbname: boot
+
+redis:
+  host: 127.0.0.1:6379
+  password: 1121
+  timeout: 200
+  maxActive: 30
+  maxIdle: 30
+
+server:
+  port: 8090
+  debug: true

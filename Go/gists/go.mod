@@ -7,12 +7,12 @@ toolchain go1.21.6
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/deckarep/golang-set v1.7.1
+	github.com/fsnotify/fsnotify v1.4.9
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-resty/resty/v2 v2.10.0
-	github.com/go-sql-driver/mysql v1.6.0
+	github.com/go-sql-driver/mysql v1.7.0
 	github.com/gocolly/colly v1.2.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
-	github.com/jinzhu/gorm v1.9.16
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/levigross/grequests v0.0.0-20231203190023-9c307ef1f48d
@@ -30,6 +30,8 @@ require (
 	go.mongodb.org/mongo-driver v1.13.1
 	go.uber.org/zap v1.10.0
 	golang.org/x/time v0.3.0
+	gorm.io/driver/mysql v1.5.2
+	gorm.io/gorm v1.25.2-0.20230530020048-26663ab9bf55
 )
 
 require (
@@ -42,7 +44,6 @@ require (
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/fortytw2/leaktest v1.3.0 // indirect
-	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -57,6 +58,7 @@ require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/kennygrant/sanitize v1.2.4 // indirect

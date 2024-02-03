@@ -1,22 +1,39 @@
 package config
 
 import (
+    "fmt"
+    "github.com/fsnotify/fsnotify"
     "github.com/spf13/viper"
     "os"
 )
 
-var Config *viper.Viper
+type Config struct {
+    Server ServerConfig
+    Log    LogConfig
+    MySQL  MySQL
+    Redis  Redis
+}
 
-func getConfig() *viper.Viper {
-    conf := viper.New()
-    conf.SetConfigName("config")
-    conf.SetConfigType("yml")
-    conf.AddConfigPath("/Users/renxie/OneDrive/Code/gist/Go/gists/config/")
-    err := conf.ReadInConfig()
+var AppConfig Config
+
+func config() Config {
+    //viper := viper.New()
+    viper.SetConfigName("config")
+    viper.SetConfigType("yml")
+    viper.AddConfigPath("/Users/renxie/OneDrive/Code/gist/Go/gists/config/")
+    err := viper.ReadInConfig()
     if err != nil {
         panic(err)
     }
-    return conf
+
+    viper.OnConfigChange(func(e fsnotify.Event) {
+        fmt.Println("Config file changed:", e.Name)
+    })
+    viper.WatchConfig()
+
+    var c Config
+    viper.Unmarshal(&c)
+    return c
 }
 
 func Exists(path string) bool {
@@ -31,5 +48,5 @@ func Exists(path string) bool {
 }
 
 func init() {
-    Config = getConfig()
+    AppConfig = config()
 }
