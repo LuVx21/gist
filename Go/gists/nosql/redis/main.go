@@ -1,8 +1,8 @@
 package main
 
 import (
-    "fmt"
     "context"
+    "fmt"
     "github.com/redis/go-redis/v9"
 )
 
@@ -37,7 +37,6 @@ func ExampleClient() {
     // Output: key value
     // key2 does not exist
 }
-
 
 func main() {
     fmt.Println("haha")

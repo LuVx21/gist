@@ -1,24 +1,18 @@
 package config
 
 import (
+    "flag"
     "fmt"
     "github.com/fsnotify/fsnotify"
     "github.com/spf13/viper"
     "os"
 )
 
-type Config struct {
-    Server ServerConfig
-    Log    LogConfig
-    MySQL  MySQL
-    Redis  Redis
-}
-
 var AppConfig Config
 
-func config() Config {
+func config(configName string) Config {
     //viper := viper.New()
-    viper.SetConfigName("config")
+    viper.SetConfigName(configName)
     viper.SetConfigType("yml")
     viper.AddConfigPath("/Users/renxie/OneDrive/Code/gist/Go/gists/config/")
     err := viper.ReadInConfig()
@@ -48,5 +42,22 @@ func Exists(path string) bool {
 }
 
 func init() {
-    AppConfig = config()
+    var env = flag.String("env", "dev", "go run main.go -env dev")
+
+    if !flag.Parsed() {
+        flag.Parse()
+    }
+    configName := ""
+    switch *env {
+    case "test":
+        configName = "config-test"
+    case "prd":
+        configName = "config-prd"
+    //case "dev":
+    //    configName = "config-dev"
+    default:
+        configName = "config-dev"
+    }
+
+    AppConfig = config(configName)
 }

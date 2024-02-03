@@ -13,6 +13,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.0
 	github.com/gocolly/colly v1.2.0
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
+	github.com/google/uuid v1.6.0
 	github.com/json-iterator/go v1.1.12
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/levigross/grequests v0.0.0-20231203190023-9c307ef1f48d
@@ -29,6 +30,7 @@ require (
 	github.com/x-cray/logrus-prefixed-formatter v0.5.2
 	go.mongodb.org/mongo-driver v1.13.1
 	go.uber.org/zap v1.10.0
+	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17
 	golang.org/x/time v0.3.0
 	gorm.io/driver/mysql v1.5.2
 	gorm.io/gorm v1.25.2-0.20230530020048-26663ab9bf55
@@ -97,7 +99,6 @@ require (
 	go.uber.org/multierr v1.1.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.16.0 // indirect
-	golang.org/x/exp v0.0.0-20220303212507-bbda1eaf7a17 // indirect
 	golang.org/x/net v0.19.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect

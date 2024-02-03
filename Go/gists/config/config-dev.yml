@@ -17,5 +17,5 @@ redis:
   maxIdle: 30
 
 server:
-  port: 8090
+  port: ":8090"
   debug: true
