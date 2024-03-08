@@ -14,7 +14,7 @@ func config(configName string) Config {
     //viper := viper.New()
     viper.SetConfigName(configName)
     viper.SetConfigType("yml")
-    viper.AddConfigPath("/Users/renxie/OneDrive/Code/gist/Go/gists/config/")
+    viper.AddConfigPath("./config")
     err := viper.ReadInConfig()
     if err != nil {
         panic(err)

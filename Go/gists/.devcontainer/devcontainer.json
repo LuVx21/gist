@@ -1,0 +1,6 @@
+{
+    "name": "coding-parent",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace"
+}
