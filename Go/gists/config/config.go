@@ -15,6 +15,8 @@ func config(configName string) Config {
     viper.SetConfigName(configName)
     viper.SetConfigType("yml")
     viper.AddConfigPath("./config")
+    viper.AddConfigPath("$GOPATH/config")
+    viper.AddConfigPath("$HOME/OneDrive/Code/gist/Go/gists/config")
     err := viper.ReadInConfig()
     if err != nil {
         panic(err)
@@ -42,13 +44,15 @@ func Exists(path string) bool {
 }
 
 func init() {
-    var env = flag.String("env", "dev", "go run main.go -env dev")
+    var env = *flag.String("env", "dev", "go run main.go -env dev")
 
-    if !flag.Parsed() {
-        flag.Parse()
-    }
+    //if !flag.Parsed() {
+    //  测试时候会出现问题: flag provided but not defined
+    //    flag.Parse()
+    //}
+
     configName := ""
-    switch *env {
+    switch env {
     case "test":
         configName = "config-test"
     case "prd":

@@ -11,6 +11,7 @@ import (
 var DB *gorm.DB
 
 func init() {
+    fmt.Println("初始化数据库连接...")
     var err error
     mysqlConfig := config.AppConfig.MySQL
     dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",

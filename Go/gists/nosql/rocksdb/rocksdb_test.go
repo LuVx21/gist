@@ -2,7 +2,6 @@ package rocksdb
 
 import (
     "github.com/linxGnu/grocksdb"
-    "luvx/api/logs"
     "strconv"
     "testing"
 )
@@ -25,10 +24,10 @@ func Test_a(t *testing.T) {
         db.Put(writeOptions, key, value)
         slice, err2 := db.Get(readOptions, key)
         if err2 != nil {
-            logs.Log.Println("获取数据异常:", key, err2)
+            t.Log("获取数据异常:", key, err2)
             continue
         }
-        logs.Log.Println("获取数据-> size:", slice.Size(), "值:", string(slice.Data()))
+        t.Log("获取数据-> size:", slice.Size(), "值:", string(slice.Data()))
 
         //err2 = db.Delete(writeOptions, key)
     }

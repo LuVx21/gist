@@ -1,10 +1,11 @@
 package config
 
 type Config struct {
-    Server ServerConfig
-    Log    LogConfig
-    MySQL  MySQL
-    Redis  Redis
+    Server  ServerConfig
+    Log     LogConfig
+    MySQL   MySQL
+    Redis   Redis
+    MongoDB MongoDB
 }
 
 type ServerConfig struct {
@@ -27,8 +28,13 @@ type MySQL struct {
 
 type Redis struct {
     Host      string
+    Username  string
     Password  string
     Timeout   int
     MaxActive int
     MaxIdle   int
+}
+
+type MongoDB struct {
+    Uri string
 }

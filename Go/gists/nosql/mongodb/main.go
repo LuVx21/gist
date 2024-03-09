@@ -7,17 +7,18 @@ import (
     "go.mongodb.org/mongo-driver/mongo"
     "go.mongodb.org/mongo-driver/mongo/options"
     "log"
+    "luvx/config"
 )
 
 const (
-    uriLocal   = "mongodb://luvx:1121@localhost:27017/boot"
     database   = "boot"
     collection = "user"
 )
 
 func main() {
+    _config := config.AppConfig.MongoDB
     // 设置MongoDB连接信息
-    clientOptions := options.Client().ApplyURI(uriLocal)
+    clientOptions := options.Client().ApplyURI(_config.Uri)
     client, err := mongo.Connect(context.TODO(), clientOptions)
     if err != nil {
         log.Fatal(err)
