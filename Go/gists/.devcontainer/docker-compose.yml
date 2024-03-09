@@ -7,10 +7,13 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/workspace:cached
+      - $HOME/go/pkg/mod:/go/pkg/mod
     networks:
       - net_common
     ports:
-      - "58090:8090"
+      - "8090:8090"
+    environment:
+      - TZ=Asia/Shanghai
     command: sleep infinity
 
 networks:
