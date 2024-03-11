@@ -25,10 +25,10 @@ Database Configuration
 */
 var (
     host     = flag.String("h", "127.0.0.1", "host(127.0.0.1)")
+    port     = flag.Int("P", 3306, "port(3306)")
     username = flag.String("u", "root", "username(root)")
     password = flag.String("p", "root", "password(root)")
     database = flag.String("d", "mysql", "database(mysql)")
-    port     = flag.Int("P", 3306, "port(3306)")
     charset  = flag.String("c", "utf8", "charset(utf8)")
     output   = flag.String("o", "", "output location")
     tables   = flag.String("t", "", "choose tables")
@@ -204,7 +204,7 @@ func init() {
             "")
         os.Exit(0)
     }
-    flag.Parse()
+
     if *version {
         fmt.Println("mysql_markdown version: 1.0.5")
         os.Exit(0)
@@ -225,6 +225,7 @@ func init() {
 main func
 */
 func main() {
+    flag.Parse()
     // connect mysql service
     db, connectErr := connect()
     if connectErr != nil {

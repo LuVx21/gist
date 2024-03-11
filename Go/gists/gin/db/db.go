@@ -13,9 +13,9 @@ var MySQLClient *gorm.DB
 func init() {
     fmt.Println("初始化数据库连接...")
     var err error
-    mysqlConfig := config.AppConfig.MySQL
+    _config := config.AppConfig.MySQL
     dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-        mysqlConfig.Username, mysqlConfig.Password, mysqlConfig.Host, mysqlConfig.Dbname)
+        _config.Username, _config.Password, _config.Host, _config.Dbname)
     MySQLClient, err = gorm.Open(mysql.New(mysql.Config{
         DSN: dsn,
     }), &gorm.Config{
