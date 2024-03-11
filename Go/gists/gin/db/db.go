@@ -8,7 +8,7 @@ import (
     "luvx/config"
 )
 
-var DB *gorm.DB
+var MySQLClient *gorm.DB
 
 func init() {
     fmt.Println("初始化数据库连接...")
@@ -16,7 +16,7 @@ func init() {
     mysqlConfig := config.AppConfig.MySQL
     dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
         mysqlConfig.Username, mysqlConfig.Password, mysqlConfig.Host, mysqlConfig.Dbname)
-    DB, err = gorm.Open(mysql.New(mysql.Config{
+    MySQLClient, err = gorm.Open(mysql.New(mysql.Config{
         DSN: dsn,
     }), &gorm.Config{
         NamingStrategy: schema.NamingStrategy{

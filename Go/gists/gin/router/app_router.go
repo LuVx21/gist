@@ -2,6 +2,7 @@ package router
 
 import (
     "github.com/gin-gonic/gin"
+    "luvx/gin/controller"
     "net/http"
 )
 
@@ -18,16 +19,23 @@ func RegisterApp(r *gin.Engine) {
             "data": "ok!",
         })
     })
-    r.GET("/app/:path", func(c *gin.Context) {
-        path := c.Param("path")
-        a := c.Query("a")
-        b := c.DefaultQuery("b", "aaa")
-        c.JSON(http.StatusOK, gin.H{
-            "path": path,
-            "a":    a,
-            "b":    b,
+
+    app := r.Group("/app")
+    {
+        app.GET("/:path", func(c *gin.Context) {
+            path := c.Param("path")
+            a := c.Query("a")
+            b := c.DefaultQuery("b", "aaa")
+            c.JSON(http.StatusOK, gin.H{
+                "path": path,
+                "a":    a,
+                "b":    b,
+            })
         })
-    })
+    }
+    {
+        app.GET("/healthyCheck", controller.HealthyCheck)
+    }
 
     // 绑定JSON ({"user": "foo", "password": "bar"})
     // 绑定QueryString (/login?user=foo&password=bar)

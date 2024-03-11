@@ -36,5 +36,6 @@ type Redis struct {
 }
 
 type MongoDB struct {
-    Uri string
+    Uri      string
+    Database string
 }
