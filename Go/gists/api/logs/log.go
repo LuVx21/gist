@@ -2,9 +2,9 @@ package logs
 
 import (
     rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+    prefixed "github.com/luvx12/logrus-prefixed-formatter"
     "github.com/rifflock/lfshook"
     "github.com/sirupsen/logrus"
-    prefixed "github.com/x-cray/logrus-prefixed-formatter"
     "luvx/config"
     "os"
     "path"
@@ -18,6 +18,7 @@ var fileFormatter *prefixed.TextFormatter // 文件输出格式
 
 func init() {
     stdFormatter = &prefixed.TextFormatter{
+        PrefixPadding:   3,
         FullTimestamp:   true,
         TimestampFormat: "2006-01-02 15:04:05.000000",
         ForceFormatting: true,
@@ -33,6 +34,7 @@ func init() {
         DebugLevelStyle: "blue",
         PrefixStyle:     "cyan",
         TimestampStyle:  "37",
+        MessageStyle:    "37",
     })
 
     fileFormatter = &prefixed.TextFormatter{
