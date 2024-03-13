@@ -4,7 +4,6 @@ import (
     "bufio"
     "fmt"
     "io"
-    "io/ioutil"
     _ "luvx/api/logs"
     "os"
     "strings"
@@ -15,12 +14,12 @@ var path = "/Users/renxie/OneDrive/Code/doc-jupyter/Go/gists/api/io/read_test.go
 func r1() {
     file, _ := os.Open(path)
     defer file.Close()
-    content, _ := ioutil.ReadAll(file)
+    content, _ := io.ReadAll(file)
     fmt.Println(string(content))
 }
 
 func r2() {
-    content, _ := ioutil.ReadFile(path)
+    content, _ := os.ReadFile(path)
     fmt.Println(string(content))
 }
 

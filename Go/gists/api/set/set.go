@@ -2,7 +2,7 @@ package set
 
 import (
     "fmt"
-    set "github.com/deckarep/golang-set"
+    set "github.com/deckarep/golang-set/v2"
 )
 
 func a() {

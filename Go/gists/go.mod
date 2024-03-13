@@ -6,7 +6,7 @@ require (
 	github.com/IBM/sarama v1.43.0
 	github.com/PuerkitoBio/goquery v1.9.1
 	github.com/apache/pulsar-client-go v0.12.1
-	github.com/deckarep/golang-set v1.8.0
+	github.com/deckarep/golang-set/v2 v2.6.0
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-co-op/gocron/v2 v2.2.5
@@ -22,6 +22,7 @@ require (
 	github.com/linxGnu/grocksdb v1.8.12
 	github.com/luvx12/logrus-prefixed-formatter v0.5.6
 	github.com/olivere/elastic v6.2.37+incompatible
+	github.com/panjf2000/ants/v2 v2.9.0
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.19.0
@@ -43,7 +44,7 @@ require (
 	gorm.io/gorm v1.25.7
 )
 
-require github.com/chenzhuoyu/iasm v0.9.0 // indirect
+require github.com/chenzhuoyu/iasm v0.9.1 // indirect
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
