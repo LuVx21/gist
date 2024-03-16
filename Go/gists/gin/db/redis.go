@@ -6,12 +6,10 @@ import (
     "luvx/config"
 )
 
-var RedisClient *redis.Client
-
-func init() {
+func NewRedisClient() *redis.Client {
     fmt.Println("初始化Redis连接...")
     redisConfig := config.AppConfig.Redis
-    RedisClient = redis.NewClient(&redis.Options{
+    return redis.NewClient(&redis.Options{
         Addr:     redisConfig.Host,
         Username: redisConfig.Username,
         Password: redisConfig.Password,

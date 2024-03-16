@@ -9,6 +9,10 @@ import (
     "net/http"
 )
 
+var (
+    redisClient = db.InitRedisClient()
+)
+
 func HealthyCheck(c *gin.Context) {
     var user model.User
     if err := db.MySQLClient.Where("id = ?", 1).First(&user).Error; err != nil {
@@ -20,7 +24,7 @@ func HealthyCheck(c *gin.Context) {
     var result bson.M
     _ = userTable.FindOne(context.TODO(), filter).Decode(&result)
 
-    v, _ := db.RedisClient.Get(context.Background(), "foo").Result()
+    v, _ := redisClient.Get(context.Background(), "foo").Result()
 
     c.JSON(http.StatusOK, gin.H{
         "mysql": user,
