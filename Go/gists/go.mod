@@ -7,6 +7,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.9.1
 	github.com/apache/pulsar-client-go v0.12.1
 	github.com/deckarep/golang-set/v2 v2.6.0
+	github.com/elastic/go-elasticsearch/v8 v8.12.1
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-co-op/gocron/v2 v2.2.5
@@ -38,14 +39,22 @@ require (
 	go-micro.dev/v4 v4.10.2
 	go.mongodb.org/mongo-driver v1.14.0
 	go.uber.org/zap v1.27.0
-	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225
+	golang.org/x/exp v0.0.0-20240314144324-c7f7c6466f7f
 	golang.org/x/time v0.5.0
 	google.golang.org/grpc v1.62.1
 	gorm.io/driver/mysql v1.5.4
 	gorm.io/gorm v1.25.7
 )
 
-require github.com/chenzhuoyu/iasm v0.9.1 // indirect
+require (
+	github.com/chenzhuoyu/iasm v0.9.1 // indirect
+	github.com/elastic/elastic-transport-go/v8 v8.4.0 // indirect
+	github.com/go-logr/logr v1.3.0 // indirect
+	github.com/go-logr/stdr v1.2.2 // indirect
+	go.opentelemetry.io/otel v1.21.0 // indirect
+	go.opentelemetry.io/otel/metric v1.21.0 // indirect
+	go.opentelemetry.io/otel/trace v1.21.0 // indirect
+)
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
