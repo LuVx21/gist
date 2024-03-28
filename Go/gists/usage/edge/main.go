@@ -41,7 +41,7 @@ func main() {
         }
 
         value, _ := DecryptWithChromium(key, encryptValue)
-        fmt.Println(name, "|", string(value))
+        fmt.Println(host, "|", name, "|", string(value))
     }
 }
 
