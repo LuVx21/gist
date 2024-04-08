@@ -4,9 +4,12 @@ import (
     "context"
     "github.com/gin-gonic/gin"
     "go.mongodb.org/mongo-driver/bson"
+    "luvx/common"
     "luvx/gin/db"
     "luvx/gin/model"
+    "luvx/gin/service"
     "net/http"
+    "sync"
 )
 
 var (
@@ -14,21 +17,62 @@ var (
 )
 
 func HealthyCheck(c *gin.Context) {
-    var user model.User
-    if err := db.MySQLClient.Where("id = ?", 1).First(&user).Error; err != nil {
-        panic(err)
+    args := 1
+
+    f0 := func() model.User {
+        mysql := common.RunWithTime("mysql", func() model.User {
+            var user model.User
+            if err := db.MySQLClient.Where("id = ?", args).First(&user).Error; err != nil {
+                panic(err)
+            }
+            return user
+        })
+        return mysql
     }
 
-    userTable := db.MongoDatabase.Collection("user")
-    filter := bson.D{{"_id", 1}}
-    var result bson.M
-    _ = userTable.FindOne(context.TODO(), filter).Decode(&result)
+    f1 := func() bson.M {
+        mongo, _ := common.RunWithTime2("mongodb", func() (bson.M, error) {
+            userTable := db.MongoDatabase.Collection("user")
+            filter := bson.D{{"_id", args}}
+            var result bson.M
+            a := userTable.FindOne(context.TODO(), filter).Decode(&result)
+            return result, a
+        })
+        return mongo
+    }
+    f2 := func() string {
+        redis, _ := common.RunWithTime2("redis", func() (string, error) {
+            return redisClient.Get(context.Background(), "foo").Result()
+        })
+        return redis
+    }
 
-    v, _ := redisClient.Get(context.Background(), "foo").Result()
+    wg := sync.WaitGroup{}
+    r0 := make(chan model.User)
+    r1 := make(chan bson.M)
+    r2 := make(chan string)
+    common.RunInRoutine(&wg, func() { r0 <- f0() })
+    common.RunInRoutine(&wg, func() { r1 <- f1() })
+    common.RunInRoutine(&wg, func() { r2 <- f2() })
 
+    sqlite, _ := common.RunWithTime2("sqlite", func() ([]map[string]interface{}, error) {
+        return db.QueryForMap(db.SqliteClient, "select * from user where id = ?", args)
+    })
+    cookie := common.RunWithTime("cookie", func() map[string]string {
+        return service.GetCookieByHost(".weibo.com", "weibo.com")
+    })
+
+    go func() {
+        wg.Wait()
+    }()
+    mysql := <-r0
+    mongo := <-r1
+    redis := <-r2
     c.JSON(http.StatusOK, gin.H{
-        "mysql": user,
-        "mongo": result,
-        "redis": v,
+        "mysql":  mysql,
+        "mongo":  mongo,
+        "redis":  redis,
+        "sqlite": sqlite,
+        "cookie": cookie,
     })
 }

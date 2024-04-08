@@ -14,6 +14,10 @@ const (
     MB     = KB * KB
 )
 
+var (
+    RocksdbClient *grocksdb.DB
+)
+
 func put(k string, v string, db *grocksdb.DB) {
     writeOptions := grocksdb.NewDefaultWriteOptions()
     writeOptions.SetSync(true)
@@ -62,7 +66,10 @@ func all(db *grocksdb.DB) {
     }
 }
 
-func OpenDB() (*grocksdb.DB, error) {
+func GetDBClient() (*grocksdb.DB, error) {
+    if RocksdbClient != nil {
+        return RocksdbClient, nil
+    }
     bloomFilter := grocksdb.NewBloomFilter(10)
 
     bbTableOptions := grocksdb.NewDefaultBlockBasedTableOptions()
@@ -101,5 +108,6 @@ func OpenDB() (*grocksdb.DB, error) {
         db.Close()
         return nil, errors.New("fail to open db")
     }
+    RocksdbClient = db
     return db, nil
 }

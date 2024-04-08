@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
     "bytes"
@@ -9,26 +9,52 @@ import (
     "errors"
     "fmt"
     "golang.org/x/crypto/pbkdf2"
+    lcommon "luvx/common"
+    "luvx/gin/common"
+    "luvx/gin/db"
     _ "modernc.org/sqlite"
     "os/exec"
 )
 
-const (
-    queryChromiumCookie = `
-SELECT name, encrypted_value, host_key, path, creation_utc, expires_utc, is_secure, is_httponly, has_expires, is_persistent 
-FROM cookies 
-where true
-and host_key = '.bilibili.com'
--- and name = 'b_lsid'
-order by host_key, name
-`
+var (
+    passwordByte = []byte("")
+    client       *sql.DB
 )
 
-func main() {
+func GetCookieStrByHost(hosts ...string) string {
+    resultMap := GetCookieByHost(hosts...)
+    var result string
+    for k, v := range resultMap {
+        result += k + "=" + v
+    }
+    return result
+}
+
+func GetCookieByHost(hosts ...string) map[string]string {
+    if client == nil {
+        home, _ := common.Dir()
+        client, _ = db.GetDataSource(home + "/data/sqlite/Cookies")
+    }
+
+    sql := `
+select name, encrypted_value, host_key, path, creation_utc, expires_utc, is_secure, is_httponly, has_expires, is_persistent
+from cookies
+where true
+and host_key in (%s)
+order by host_key, name
+-- limit 1
+;
+`
+    var args string
+    for i := 0; i < len(hosts); i++ {
+        args += lcommon.IfThen(i == 0, "", ", ") + fmt.Sprintf("'%s'", hosts[i])
+    }
+    sql = fmt.Sprintf(sql, args)
+
     key := masterKey()
 
-    db, _ := sql.Open("sqlite", "/Users/renxie/Library/Application Support/Microsoft Edge Dev/Default/Cookies")
-    rows, _ := db.Query(queryChromiumCookie)
+    result := make(map[string]string)
+    rows, _ := client.Query(sql)
     defer rows.Close()
     for rows.Next() {
         var (
@@ -41,23 +67,28 @@ func main() {
         }
 
         value, _ := DecryptWithChromium(key, encryptValue)
-        fmt.Println(host, "|", name, "|", string(value))
+        //fmt.Println(host, "|", name, "|", string(value))
+        result[name] = string(value)
     }
+    return result
 }
 
 func masterKey() []byte {
-    var (
-        stdout, stderr bytes.Buffer
-    )
-    cmd := exec.Command("security", "find-generic-password", "-wa", "Microsoft Edge")
-    cmd.Stdout = &stdout
-    cmd.Stderr = &stderr
-    if err := cmd.Run(); err != nil {
-        fmt.Println(cmd.String())
-        fmt.Printf("run security command failed: %w, message %s", err, stderr.String())
+    if len(passwordByte) == 0 {
+        var (
+            stdout, stderr bytes.Buffer
+        )
+        cmd := exec.Command("security", "find-generic-password", "-wa", "Microsoft Edge")
+        cmd.Stdout = &stdout
+        cmd.Stderr = &stderr
+        if err := cmd.Run(); err != nil {
+            fmt.Println(cmd.String())
+            //fmt.Printf("run security command failed: %w, message %s", err, stderr.String())
+        }
+        passwordByte = stdout.Bytes()
     }
 
-    secret := bytes.TrimSpace(stdout.Bytes())
+    secret := bytes.TrimSpace(passwordByte)
     key := pbkdf2.Key(secret, []byte("saltysalt"), 1003, 16, sha1.New)
     return key
 }

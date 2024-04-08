@@ -2,12 +2,13 @@ package rocksdb
 
 import (
     "github.com/linxGnu/grocksdb"
+    "luvx/api/logs"
     "strconv"
     "testing"
 )
 
 func Test_a(t *testing.T) {
-    db, _ := OpenDB()
+    db, _ := GetDBClient()
 
     readOptions := grocksdb.NewDefaultReadOptions()
     readOptions.SetFillCache(true)
@@ -27,7 +28,7 @@ func Test_a(t *testing.T) {
             t.Log("获取数据异常:", key, err2)
             continue
         }
-        t.Log("获取数据-> size:", slice.Size(), "值:", string(slice.Data()))
+        logs.Log.Printf("获取数据-> size:%d, 值:%s", slice.Size(), string(slice.Data()))
 
         //err2 = db.Delete(writeOptions, key)
     }
@@ -37,7 +38,7 @@ func Test_a(t *testing.T) {
 }
 
 func Test_Iterator(t *testing.T) {
-    db, _ := OpenDB()
+    db, _ := GetDBClient()
     get("key_0", db)
 
     all(db)

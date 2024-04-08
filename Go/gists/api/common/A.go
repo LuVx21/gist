@@ -1,6 +1,8 @@
 package common
 
-import "fmt"
+import (
+    "fmt"
+)
 
 type User struct {
     Id   uint64

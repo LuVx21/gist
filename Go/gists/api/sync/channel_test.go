@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "log"
     "testing"
     "time"
 )
@@ -27,4 +28,20 @@ func Test_channel(t *testing.T) {
     go Producer(channel)
     go Consumer(channel)
     time.Sleep(12 * time.Second)
+}
+
+func TestTask1(t *testing.T) {
+    ch := make(chan struct{}) // 初始化 chan
+    log.Println("point0")
+    go func() {
+        log.Println("point---")
+        Task()
+        ch <- struct{}{} // 发送到 chan
+    }()
+    log.Println("point1")
+    _ = <-ch // 从 chan 获取,阻塞
+    log.Println("point2")
+    log.Println("main done")
+
+    time.Sleep(time.Second * 4)
 }
