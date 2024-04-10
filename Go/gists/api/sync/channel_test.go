@@ -45,3 +45,14 @@ func TestTask1(t *testing.T) {
 
     time.Sleep(time.Second * 4)
 }
+
+func Test_c_01(t *testing.T) {
+    r1 := make(chan string, 1)
+    r1 <- "a"
+    <-r1
+    r1 <- "b"
+    close(r1)
+    for s := range r1 {
+        fmt.Println(s)
+    }
+}

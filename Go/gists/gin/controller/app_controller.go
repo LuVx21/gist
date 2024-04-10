@@ -48,9 +48,9 @@ func HealthyCheck(c *gin.Context) {
     }
 
     wg := sync.WaitGroup{}
-    r0 := make(chan model.User)
-    r1 := make(chan bson.M)
-    r2 := make(chan string)
+    r0 := make(chan model.User, 1)
+    r1 := make(chan bson.M, 1)
+    r2 := make(chan string, 1)
     common.RunInRoutine(&wg, func() { r0 <- f0() })
     common.RunInRoutine(&wg, func() { r1 <- f1() })
     common.RunInRoutine(&wg, func() { r2 <- f2() })
@@ -62,9 +62,10 @@ func HealthyCheck(c *gin.Context) {
         return service.GetCookieByHost(".weibo.com", "weibo.com")
     })
 
-    go func() {
-        wg.Wait()
-    }()
+    wg.Wait()
+    close(r0)
+    close(r1)
+    close(r2)
     mysql := <-r0
     mongo := <-r1
     redis := <-r2

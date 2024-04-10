@@ -41,8 +41,8 @@ func CatchingWithRoutine(fn func()) {
 func RunInRoutine(wg *sync.WaitGroup, f func()) {
     wg.Add(1)
     go func() {
+        defer wg.Done()
         f()
-        wg.Done()
     }()
 }
 
